@@ -15,6 +15,15 @@ const Register = () => {
         <p className="text-neutral-500">Register your self right now</p>
         <form>
           <div className="mt-4">
+            <Label htmlFor="name">Name </Label>
+            <Input
+              type="name"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="mt-4">
             <Label htmlFor="email">Email </Label>
             <Input
               type="email"
@@ -30,6 +39,15 @@ const Register = () => {
               id="password"
               name="password"
               placeholder="Enter your Password"
+            />
+          </div>
+          <div className="mt-4">
+            <Label htmlFor="password">Confirm Password</Label>
+            <Input
+              type="password"
+              id="cpassword"
+              name="confirm_password"
+              placeholder="Confirm your Password"
             />
           </div>
           <div className="mt-6 flex  justify-between items-center">
