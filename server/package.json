@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "start": "node ./dist/index.js",
-    "server": "nodemon ./dist/index.js",
     "watch": "tsc -w",
-    "dev": "concurrently \"npm run watch \" \"npm run watch-views\" \" npm run server\"",
-    "build": "tsc && npm run copy-files",
-    "copy-files": "copyfiles -u 1 \"src/views/**/* \" dist/",
+    "build": "concurrently \"tsc\" \"npm run copy-files\" ",
+    "server": "nodemon ./dist/index.js",
+    "dev": "concurrently \"npm run watch\" \"npm run server\" \"npm run watch-views\"",
+    "copy-files": "copyfiles -u 1 \"src/views/**/*\" dist/",
     "watch-views": "nodemon --watch src/views -e ejs -x \"npm run copy-files\""
   },
   "keywords": [],
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
+    "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.0",
     "copyfiles": "^2.4.1",
     "nodemon": "^3.1.7"
