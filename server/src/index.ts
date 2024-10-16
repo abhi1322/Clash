@@ -1,16 +1,16 @@
 import express, { Application, Response, Request } from "express";
 import "dotenv/config";
-import ejs, { name } from "ejs";
+import ejs from "ejs";
 
 const PORT = process.env.PORT || 8000;
 const app: Application = express();
 import path from "path";
 import { fileURLToPath } from "url";
-import { sendEmail } from "./config/mail.js";
 
 // Queue
 import "./jobs/index.js";
 import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
+import Routes from "./routes/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,7 +22,10 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "./views"));
 
-// routes
+// * Routes
+
+app.use(Routes);
+
 app.get("/", async (req: Request, res: Response) => {
   const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
     name: "Abhishek kumar",
@@ -38,8 +41,6 @@ app.get("/", async (req: Request, res: Response) => {
 
   res.json({ message: "Email sent successfully" });
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`listening on http://localhost:${PORT}`);

@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 export const transporter = nodemailer.createTransport({
   host: process.env.SMTP_SERVER,
-  port: process.env.SMTP_SERVER_PORT,
+  port: 587,
   secure: false,
   auth: {
     user: process.env.SMTP_SERVER_LOGIN_URL,
