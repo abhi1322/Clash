@@ -5,7 +5,9 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 import path from "path";
 import { fileURLToPath } from "url";
-import { sendEmail } from "./config/mail.js";
+// Queue
+import "./jobs/index.js";
+import { emailQueue, emailQueueName } from "./jobs/EmailJob.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // middlewares
 app.use(express.json());
@@ -18,9 +20,13 @@ app.get("/", async (req, res) => {
     const html = await ejs.renderFile(__dirname + `/views/emails/welcome.ejs`, {
         name: "Abhishek kumar",
     });
-    await sendEmail("meyop59384@skrank.com", "Testing my SMTP", html);
+    // await sendEmail("meyop59384@skrank.com", "Testing my SMTP", html);
+    await emailQueue.add(emailQueueName, {
+        to: "meyop59384@skrank.com",
+        subject: "Testing my SMTP",
+        body: html,
+    });
     res.json({ message: "Email sent successfully" });
-    // res.render("emails/welcome", { name: "Abhishek Kumar" });/
 });
 app.listen(PORT, () => {
     console.log(`listening on http://localhost:${PORT}`);
